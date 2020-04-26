@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import Navbar from './components/Navigation';
-
-export const Context = React.createContext('deafult value');
+import { GoogleContextProvider } from './context';
 
 const App = () => {
   useEffect(() => {
@@ -12,7 +11,9 @@ const App = () => {
   }, []);
   return (
     <View style={styles.container}>
-      <Navbar />
+      <GoogleContextProvider>
+        <Navbar />
+      </GoogleContextProvider>
     </View>
   );
 };

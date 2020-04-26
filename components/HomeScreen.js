@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Modal } from 'react-native';
 import axios from 'axios';
 import Headers from './Modules/Header';
@@ -6,6 +6,7 @@ import CardList from './Modules/CardList';
 import key from '../config';
 import ModalInfo from './Modules/ModalInfo';
 import a from './dumm';
+import { GoogleContext } from '../context';
 
 const HomeScreen = () => {
   const [items, setItems] = useState([]);
@@ -13,7 +14,7 @@ const HomeScreen = () => {
     { openModel: false },
   );
   const [summary, setSummary] = useState({});
-
+  const { googleSearch } = useContext(GoogleContext);
   useEffect(() => {
     axios.get('http://localhost:5001/homes')
       .then((response) => {
@@ -24,6 +25,32 @@ const HomeScreen = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const text = googleSearch.google;
+    axios({
+      method: 'GET',
+      url: 'https://webknox-recipes.p.rapidapi.com/recipes/search',
+      headers: {
+        'content-type': 'application/octet-stream',
+        'x-rapidapi-host': 'webknox-recipes.p.rapidapi.com',
+        'x-rapidapi-key': `${key}`,
+      },
+      params: {
+        type: 'main course',
+        offset: '0',
+        number: '5',
+        query: `${text}`,
+      },
+    })
+      .then((response) => {
+        setItems((prevItems) => [...response.data.results]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [googleSearch]);
+
+  console.log(googleSearch);
   const onSubmit = (text) => {
     axios({
       method: 'GET',

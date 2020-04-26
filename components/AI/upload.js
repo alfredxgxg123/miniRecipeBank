@@ -4,7 +4,9 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-const Upload = ({ state, setState, submitToGoogle }) => {
+const Upload = ({
+  state, setState, submitToGoogle, navigation,
+}) => {
   const [image, setImage] = useState({
     image: null,
     url: null,
@@ -60,7 +62,7 @@ const Upload = ({ state, setState, submitToGoogle }) => {
   return (
     <View style={styles.main}>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.buttons} onPress={() => submitToGoogle(image.url)}>
+        <TouchableOpacity style={styles.buttons} onPress={() => navigation.navigate('Home')} onPressIn={() => submitToGoogle(image.url)}>
           <Text style={styles.text}>
             Search it for me plz!
           </Text>

@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View } from 'react-native';
 import Environment from '../config/environment';
 import Upload from './AI/upload';
+import { GoogleContext } from '../context';
+import onSearch from '../action';
 
-const FavoritedScreen = () => {
+const FavoritedScreen = ({ navigation }) => {
   const [state, setState] = useState({
     image: null,
     uploading: false,
     googleResponse: null,
     name: '',
   });
+
+  const { dispatch } = useContext(GoogleContext);
 
   const submitToGoogle = async (url) => {
     try {
@@ -39,9 +43,8 @@ const FavoritedScreen = () => {
         },
       );
       const responseJson = await response.json();
-      console.log(responseJson.responses[0].labelAnnotations);
       const result = filter(responseJson.responses[0].labelAnnotations);
-      console.log(result);
+      onSearch(dispatch)(result);
       setState({
         googleResponse: responseJson,
         uploading: false,
@@ -54,7 +57,7 @@ const FavoritedScreen = () => {
 
   return (
     <View>
-      <Upload state={state} setState={setState} submitToGoogle={submitToGoogle} />
+      <Upload state={state} setState={setState} submitToGoogle={submitToGoogle} navigation={navigation} />
     </View>
   );
 };
