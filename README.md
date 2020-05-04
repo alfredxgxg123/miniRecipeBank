@@ -1,8 +1,8 @@
 # miniRecipeBank
 
-A react native app that provide users to search food recipes through word search engine or pciture recognition AI. 
+A react native app that provides users to search for food recipes through the word search engine or picture recognition AI
 
-In order to run, clone down the repo and run the following comands:
+In order to run, clone down the repo and run the following commands:
 
 1. npm install
 2. npm start
