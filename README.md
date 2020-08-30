@@ -3,6 +3,16 @@
 A react native app that provides users to search for food recipes through the word search engine or picture recognition AI
 
 
+## Tech Stack
+
+- JavaScript
+- Node.js
+- Express.js
+- React Native
+- Styled-Components
+- AWS service
+- Google Vision API
+
 ## Installation
 
 In order to run, clone down the repo and run the following commands:
